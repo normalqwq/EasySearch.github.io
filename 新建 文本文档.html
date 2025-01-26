@@ -1,0 +1,360 @@
+<html project="EasySearch-Static-Updated" file="index.html" type="html">
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasySearch</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style id="custom-styles"></style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#3b82f6',
+                            foreground: '#ffffff',
+                        },
+                        secondary: {
+                            DEFAULT: '#f3f4f6',
+                            foreground: '#1f2937',
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
+    <div class="p-4 md:p-8">
+        <!-- 顶部栏 -->
+        <div class="flex justify-end items-center space-x-4 mb-8">
+            <div id="weather-container" class="flex items-center hover:text-primary transition-colors">
+                <!-- Weather information will be inserted here -->
+            </div>
+            <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+            </button>
+            <button id="settings-button" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                </svg>
+            </button>
+        </div>
+    <!-- Logo -->
+    <div class="flex justify-center mb-8">
+        <h1 class="text-3xl font-bold text-primary">EasySearch</h1>
+    </div>
+
+    <!-- 搜索框 -->
+    <form id="search-form" class="max-w-2xl mx-auto mb-12 relative">
+        <input type="search" name="search" placeholder="搜索网页" class="w-full h-12 pl-4 pr-12 rounded-full shadow-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
+        <button type="submit" class="absolute right-1 top-1 rounded-full w-10 h-10 p-0 bg-primary hover:bg-primary-600 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mx-auto text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+        </button>
+    </form>
+
+    <!-- 快捷导航 -->
+    <div id="custom-sites" class="max-w-4xl mx-auto mb-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        <!-- Custom sites will be dynamically inserted here -->
+    </div>
+
+    <!-- 添加网站按钮 -->
+    <div class="flex justify-center">
+        <button id="add-site-button" class="flex flex-col items-center p-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+            <div class="w-12 h-12 flex items-center justify-center mb-2 bg-secondary text-secondary-foreground rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"/>
+                    <line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+            </div>
+            <span class="text-sm">添加网站</span>
+        </button>
+    </div>
+</div>
+
+<!-- 设置模态框 -->
+<div id="settings-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg max-w-md w-full">
+        <h2 class="text-2xl font-bold mb-4">设置</h2>
+        <div class="space-y-4">
+            <div>
+                <label for="search-engine" class="block text-sm font-medium text-gray-700 dark:text-gray-300">默认搜索引擎</label>
+                <select id="search-engine" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md">
+                    <option value="bing">Bing</option>
+                    <option value="google">Google</option>
+                    <option value="baidu">百度</option>
+                </select>
+            </div>
+            <div class="flex items-center">
+                <input id="show-weather" type="checkbox" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded">
+                <label for="show-weather" class="ml-2 block text-sm text-gray-900 dark:text-gray-100">
+                    显示天气信息
+                </label>
+            </div>
+            <div>
+                <label for="custom-css" class="block text-sm font-medium text-gray-700 dark:text-gray-300">自定义 CSS</label>
+                <textarea id="custom-css" rows="4" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md"></textarea>
+            </div>
+        </div>
+        <div class="mt-6 flex justify-end">
+            <button id="close-settings" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300 transition-colors">关闭</button>
+        </div>
+    </div>
+</div>
+
+<!-- 添加网站模态框 -->
+<div id="add-site-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg max-w-md w-full">
+        <h2 class="text-2xl font-bold mb-4">添加网站</h2>
+        <form id="add-site-form" class="space-y-4">
+            <div>
+                <label for="site-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">网站名称</label>
+                <input type="text" id="site-name" name="site-name" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50">
+            </div>
+            <div>
+                <label for="site-url" class="block text-sm font-medium text-gray-700 dark:text-gray-300">网站地址</label>
+                <input type="url" id="site-url" name="site-url" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50">
+            </div>
+            <div class="flex justify-end space-x-2">
+                <button type="button" id="cancel-add-site" class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">取消</button>
+                <button type="submit" class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">添加</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('theme-toggle');
+    const html = document.documentElement;
+
+    function setTheme(theme) {
+        if (theme === 'dark') {
+            html.classList.add('dark');
+        } else {
+            html.classList.remove('dark');
+        }
+        localStorage.setItem('theme', theme);
+    }
+
+    // Check for saved theme preference or use system preference
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (savedTheme) {
+        setTheme(savedTheme);
+    } else if (systemPrefersDark) {
+        setTheme('dark');
+    }
+
+    // Toggle theme
+    themeToggle.addEventListener('click', () => {
+        const isDark = html.classList.contains('dark');
+        setTheme(isDark ? 'light' : 'dark');
+    });
+
+    // Search functionality
+    const searchForm = document.getElementById('search-form');
+    searchForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const query = e.target.search.value;
+        const searchEngine = localStorage.getItem('searchEngine') || 'bing';
+        if (query) {
+            let searchUrl;
+            switch (searchEngine) {
+                case 'google':
+                    searchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+                    break;
+                case 'baidu':
+                    searchUrl = `https://www.baidu.com/s?wd=${encodeURIComponent(query)}`;
+                    break;
+                default:
+                    searchUrl = `https://www.bing.com/search?q=${encodeURIComponent(query)}`;
+            }
+            window.location.href = searchUrl;
+        }
+    });
+
+    // Custom sites functionality
+    const customSitesContainer = document.getElementById('custom-sites');
+    const addSiteButton = document.getElementById('add-site-button');
+    const addSiteModal = document.getElementById('add-site-modal');
+    const addSiteForm = document.getElementById('add-site-form');
+    const cancelAddSite = document.getElementById('cancel-add-site');
+
+    function loadCustomSites() {
+        const sites = JSON.parse(localStorage.getItem('customSites')) || [];
+        customSitesContainer.innerHTML = '';
+        sites.forEach((site, index) => {
+            const siteElement = document.createElement('div');
+            siteElement.className = 'flex flex-col items-center p-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors relative';
+            siteElement.innerHTML = `
+                <a href="${site.url}" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center">
+                    <div class="w-12 h-12 flex items-center justify-center mb-2 bg-primary text-primary-foreground rounded-full text-xl font-bold">
+                        ${site.name[0].toUpperCase()}
+                    </div>
+                    <span class="text-sm text-center">${site.name}</span>
+                </a>
+                <button class="delete-site absolute top-0 right-0 p-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors" data-index="${index}">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            `;
+            customSitesContainer.appendChild(siteElement);
+        });
+
+        // Add event listeners for delete buttons
+        document.querySelectorAll('.delete-site').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const index = parseInt(e.currentTarget.getAttribute('data-index'));
+                deleteSite(index);
+            });
+        });
+    }
+
+    function deleteSite(index) {
+        const sites = JSON.parse(localStorage.getItem('customSites')) || [];
+        sites.splice(index, 1);
+        localStorage.setItem('customSites', JSON.stringify(sites));
+        loadCustomSites();
+    }
+
+    addSiteButton.addEventListener('click', () => {
+        addSiteModal.classList.remove('hidden');
+    });
+
+    cancelAddSite.addEventListener('click', () => {
+        addSiteModal.classList.add('hidden');
+    });
+
+    addSiteForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('site-name').value;
+        const url = document.getElementById('site-url').value;
+        const sites = JSON.parse(localStorage.getItem('customSites')) || [];
+        sites.push({ name, url });
+        localStorage.setItem('customSites', JSON.stringify(sites));
+        loadCustomSites();
+        addSiteModal.classList.add('hidden');
+        addSiteForm.reset();
+    });
+
+    // Settings functionality
+    const settingsButton = document.getElementById('settings-button');
+    const settingsModal = document.getElementById('settings-modal');
+    const closeSettings = document.getElementById('close-settings');
+    const searchEngineSelect = document.getElementById('search-engine');
+    const showWeatherCheckbox = document.getElementById('show-weather');
+    const customCSSTextarea = document.getElementById('custom-css');
+
+    settingsButton.addEventListener('click', () => {
+        settingsModal.classList.remove('hidden');
+    });
+
+    closeSettings.addEventListener('click', () => {
+        settingsModal.classList.add('hidden');
+    });
+
+    searchEngineSelect.addEventListener('change', (e) => {
+        localStorage.setItem('searchEngine', e.target.value);
+    });
+
+    showWeatherCheckbox.addEventListener('change', (e) => {
+        localStorage.setItem('showWeather', e.target.checked);
+        updateWeatherDisplay();
+    });
+
+    customCSSTextarea.addEventListener('input', (e) => {
+        localStorage.setItem('customCSS', e.target.value);
+        document.getElementById('custom-styles').textContent = e.target.value;
+    });
+
+    // Load saved settings
+    searchEngineSelect.value = localStorage.getItem('searchEngine') || 'bing';
+    showWeatherCheckbox.checked = localStorage.getItem('showWeather') !== 'false';
+    customCSSTextarea.value = localStorage.getItem('customCSS') || '';
+    document.getElementById('custom-styles').textContent = customCSSTextarea.value;
+
+    // Weather functionality
+    async function getWeather() {
+        try {
+            const ipResponse = await fetch('https://api.ipify.org?format=json');
+            const ipData = await ipResponse.json();
+            const ip = ipData.ip;
+
+            const locationResponse = await fetch(`https://ipapi.co/${ip}/json/`);
+            const locationData = await locationResponse.json();
+            const city = locationData.city;
+            const country = locationData.country_name;
+
+            const weatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=YOUR_OPENWEATHERMAP_API_KEY&units=metric`);
+            const weatherData = await weatherResponse.json();
+
+            return {
+                city: city,
+                temperature: Math.round(weatherData.main.temp),
+                description: weatherData.weather[0].description
+            };
+        } catch (error) {
+            console.error('Error fetching weather:', error);
+            return null;
+        }
+    }
+
+    function updateWeatherDisplay() {
+        const weatherContainer = document.getElementById('weather-container');
+        const showWeather = localStorage.getItem('showWeather') !== 'false';
+
+        if (showWeather) {
+            getWeather().then(weatherData => {
+                if (weatherData) {
+                    weatherContainer.innerHTML = `
+                        <span>${weatherData.city}</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mx-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+                        </svg>
+                        <span>${weatherData.temperature}°C</span>
+                        <span class="ml-2">${weatherData.description}</span>
+                    `;
+                    weatherContainer.style.display = 'flex';
+                } else {
+                    weatherContainer.style.display = 'none';
+                }
+            });
+        } else {
+            weatherContainer.style.display = 'none';
+        }
+    }
+
+    // Initial load
+    loadCustomSites();
+    updateWeatherDisplay();
+</script>
+</body>
+</html>
+</html>
